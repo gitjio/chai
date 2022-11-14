@@ -1,0 +1,47 @@
+----BOUNDARY FILL-----
+
+include<stdlib.h> include<gíaphics.h>
+
+void boundaíyFill(int x, int y, int fill_coloí,int boundaíy_coloí)
+{
+if(getpixel(x, y) != boundaíy_coloí && getpixel(x, y) != fill_coloí)
+
+{
+putpixel(x, y, fill_coloí);
+boundaíyFill(x + 1, y, fill_coloí, boundaíy_coloí); boundaíyFill(x - 1, y + 1, fill_coloí, boundaíy_coloí); boundaíyFill(x, y + 1, fill_coloí, boundaíy_coloí); boundaíyFill(x, y - 1, fill_coloí, boundaíy_coloí);
+}
+}
+
+int main()
+{
+
+int gd = DELECL, gm; initgíaph(&gd, &gm, "");
+
+int x = 250, y = 250, íadius = 100; ciícle(x, y, íadius);
+
+boundaíyFill(x, y, 6, 15); delay(500000); closegíaph();
+íetuín 0;
+}
+
+
+
+
+-----FLOOD FILL-------
+
+include<stdlib.h> include<gíaphics.h>
+
+void flood_fill(int x, int y, int new_col, int old_col)
+{
+
+if (getpixel(x, y) == old_col) { putpixel(x, y, new_col);
+flood_fill(x + 1, y, new_col, old_col); flood_fill(x - 1, y, new_col, old_col); flood_fill(x, y + 1, new_col, old_col); flood_fill(x, y - 1, new_col, old_col);
+}
+}
+
+int main()
+{
+int gd, gm = DELECL; initgíaph(&gd, &gm, "");
+
+íectangle(50,50,250,250); flood_fill(55,55,10,0); delay(5000000); closegíaph();
+íetuín 0;
+}

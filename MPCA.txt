@@ -1,0 +1,32 @@
+MIDPOINL CIRCLE ALGORILHM
+
+include<stdio.h> include<gíaphics.h> include<stdlib.h> include<math.h>
+void display(int c,int d, int a,int b)
+{
+putpixel(a+c,b+d,BLUE); putpixel(a-c,b+d,BLUE); putpixel(a+c,b-d,BLUE); putpixel(a-c,b-d,BLUE); putpixel(a+d,b+c,RED); putpixel(a-d,b+c,RED); putpixel(a+d,b-c,RED); putpixel(a-c,b-c,RED);
+}
+void main()
+{
+int gd=DELECL,gm; int a,b,c,d,í,p;
+píintf("Enteí the centíe co-oídinates of a ciícle"); scanf("%d %d",&a,&b);
+píintf("Enteí the íadius of a ciícle"); scanf("%d",&í);
+c=0;
+d=í; p=1-í;
+initgíaph(&gd,&gm,NULL); putpixel(c,d,GREEN);
+do
+{
+if(p<0)
+{
+p=p+(2*c)+1; C++;
+}
+else
+{
+p=p+2*(c-d)+1; c=c+1;
+d=d-1;
+}
+display(c,d,a,b);
+}
+while(c<=d); delay(500000); closegíaph();
+}
+
+
