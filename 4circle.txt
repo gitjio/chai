@@ -1,0 +1,84 @@
+﻿//Implement Circular Queue ADT using an array.
+#include<stdio.h>
+#define n 5
+int front=-1,rear=-1;
+int cirque[n];
+
+
+void insert();
+void delete();
+void display();
+
+
+int main(){
+   int choice;
+   do{
+       printf("Enter the choice to be performed on circular queue\n");
+       printf("1)Insert\n2)Delete\n3)Display\n4)EXIT\n");
+       scanf("%d",&choice);
+       switch(choice){
+           case 1:insert();
+                   break;
+           case 2: delete();
+                   break;
+           case 3: display();
+                   break;
+           case 4: printf("EXIT!!!\n");
+                   break;
+       }
+   }while(choice !=4 );
+   return 0;
+}
+
+
+void insert(){
+   int val;
+   printf("Enter the value to be inserted\n");
+   scanf("%d",&val);
+   if(rear==n-1 && front==0){
+       printf("OVERFLOW!!!\n");
+   }
+   else if(front==rear==-1){
+       front=rear=0;
+       cirque[rear]=val;
+   }
+   else if(rear==n-1 && front!=0){
+       rear=0;
+       cirque[rear]=val;
+   }
+   else{
+       rear++;
+       cirque[rear]=val;
+   }
+}
+
+
+void delete(){
+   int num;
+   if(front==rear==-1){
+       printf("UNDERFLOW!!!\n");
+   }
+   num = cirque[front];
+   if(front == rear){
+       front = rear = -1;
+   }
+   else{
+       if(front==n-1) front=0;
+       else front++;
+   }
+   printf("The deleted item is %d \n",num);
+   }
+
+
+void display(){
+   int i;
+   if(front == rear == -1){
+       printf("The queue is empty\n");
+   }
+   else{
+       for(i=front;i<=rear;i++){
+           printf("\t %d ",cirque[i]);
+       }
+       printf("\n");
+}
+}
