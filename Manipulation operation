@@ -1,0 +1,334 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.27 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use restaurant;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table dropthistable (attri1 int(2), attri2 varchar(10),);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> create table dropthistable (attri1 int(2), attri2 varchar(10));
+Query OK, 0 rows affected, 1 warning (0.67 sec)
+
+mysql> show tables
+    -> ;
++----------------------+
+| Tables_in_restaurant |
++----------------------+
+| dropthistable        |
++----------------------+
+1 row in set (0.02 sec)
+
+mysql> desc dropthistable;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| attri1 | int         | YES  |     | NULL    |       |
+| attri2 | varchar(10) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.13 sec)
+
+mysql> drop table dropthistable;
+Query OK, 0 rows affected (0.33 sec)
+
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table (
+    ->
+    ->
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(' at line 1
+mysql>
+mysql> create table tables_in_restaurant (t.id int(4), capacity int(4), location varchar(20),primary key (t.id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.id int(4), capacity int(4), location varchar(20),primary key (t.id))' at line 1
+mysql> create table tables_in_restaurant (t_id int(4), capacity int(4), location varchar(20),primary key (t_id));
+Query OK, 0 rows affected, 2 warnings (0.31 sec)
+
+mysql> desc tables_in_restaurant;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| t_id     | int         | NO   | PRI | NULL    |       |
+| capacity | int         | YES  |     | NULL    |       |
+| location | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.04 sec)
+
+mysql> create table customer
+    -> (
+    -> c_id int(4), first_name varchar(20), last_name varchar(20), date varchar(20), time_in varchar(20), time_out varchar(20), address varchar(20));
+Query OK, 0 rows affected, 1 warning (0.76 sec)
+
+mysql> desc customer;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| c_id       | int         | YES  |     | NULL    |       |
+| first_name | varchar(20) | YES  |     | NULL    |       |
+| last_name  | varchar(20) | YES  |     | NULL    |       |
+| date       | varchar(20) | YES  |     | NULL    |       |
+| time_in    | varchar(20) | YES  |     | NULL    |       |
+| time_out   | varchar(20) | YES  |     | NULL    |       |
+| address    | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+7 rows in set (0.05 sec)
+
+mysql> alter table customer
+    -> (
+    -> primary;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(
+primary' at line 2
+mysql> alter table customer add constraint primary key (c_id);
+Query OK, 0 rows affected (0.89 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| c_id       | int         | NO   | PRI | NULL    |       |
+| first_name | varchar(20) | YES  |     | NULL    |       |
+| last_name  | varchar(20) | YES  |     | NULL    |       |
+| date       | varchar(20) | YES  |     | NULL    |       |
+| time_in    | varchar(20) | YES  |     | NULL    |       |
+| time_out   | varchar(20) | YES  |     | NULL    |       |
+| address    | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+7 rows in set (0.04 sec)
+
+mysql> create
+    -> \c
+mysql> create table occupied_by (t_id int(4), c_id int(4), primary key (t_id, c_id), foreign key (t_id) references tables_in_restaurant(t_id), foreign key (c_id) references customer(c_id));
+Query OK, 0 rows affected, 2 warnings (1.09 sec)
+
+mysql> desc occupied_by;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| t_id  | int  | NO   | PRI | NULL    |       |
+| c_id  | int  | NO   | PRI | NULL    |       |
++-------+------+------+-----+---------+-------+
+2 rows in set (0.04 sec)
+
+mysql> show tables;
++----------------------+
+| Tables_in_restaurant |
++----------------------+
+| customer             |
+| occupied_by          |
+| tables_in_restaurant |
++----------------------+
+3 rows in set (0.01 sec)
+
+mysql> create table feedback (f_id int(4), tip int(5), suggestion varchar(100), c_id int(4), primary key (f_id), foreign key (c_id) references customer(c_id));
+Query OK, 0 rows affected, 3 warnings (0.45 sec)
+
+mysql> desc feedback;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| f_id       | int          | NO   | PRI | NULL    |       |
+| tip        | int          | YES  |     | NULL    |       |
+| suggestion | varchar(100) | YES  |     | NULL    |       |
+| c_id       | int          | YES  | MUL | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+4 rows in set (0.06 sec)
+
+mysql> create table phone (c_id int(4), phone_number int(10), primary key (c_id, phone_number), foreign key (c_id) references customer (c_id));
+Query OK, 0 rows affected, 2 warnings (0.38 sec)
+
+mysql> create table staff
+    -> (
+    -> staff_id int(4), first_staff_name varchar(20), last_staff_name varchar(20), date_of_birth varchar(20), gender varchar(20), age int(3),
+    -> primary key (staff_id)
+    -> );
+Query OK, 0 rows affected, 2 warnings (0.45 sec)
+
+mysql>  create table order (o_id int(4), total_price int(6), tax (6), staff_id int(4), c_id int(4), total_payable int(6),
+    -> primary key (o_id),
+    -> foreign key (staff_id) references staff(staff_id),
+    -> foreign key (c_id) references customer(c_id),
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order (o_id int(4), total_price int(6), tax (6), staff_id int(4), c_id int(4), t' at line 1
+mysql>  create table order (o_id int(4), total_price int(6), tax int(6), staff_id int(4), c_id int(4), total_payable int(6),
+    -> primary key (o_id),
+    -> foreign key (staff_id) references staff(staff_id),
+    -> foreign key (c_id) references customer(c_id),
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order (o_id int(4), total_price int(6), tax int(6), staff_id int(4), c_id int(4)' at line 1
+mysql>  create table order (o_id int(4), total_price int(6), tax int(6), staff_id int(4), c_id int(4), total_payable int(6)
+    -> ,primary key (o_id),
+    -> foreign key (c_id) references customer(c_id),
+    -> foreign key (staff_id) references staff(staff_id),
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order (o_id int(4), total_price int(6), tax int(6), staff_id int(4), c_id int(4)' at line 1
+mysql>  create table order (o_id int(4), total_price int(6), tax int(6), staff_id int(4), c_id int(4), total_payable int(6)
+    -> \c
+mysql>  create table order
+    -> (
+    -> o_id int(4), total_price int(6), tax int(6), staff_id int(4), c_id int(4), total_payable int(6),
+    -> primary key (o_id),
+    -> foreign key (staff_id) references staff(staff_id),
+    -> foreign key (c_id) references customer(c_id),
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order
+(
+o_id int(4), total_price int(6), tax int(6), staff_id int(4), c_id int(4' at line 1
+mysql> show tables;
++----------------------+
+| Tables_in_restaurant |
++----------------------+
+| customer             |
+| feedback             |
+| occupied_by          |
+| phone                |
+| staff                |
+| tables_in_restaurant |
++----------------------+
+6 rows in set (0.00 sec)
+
+mysql> create table customerorder (o_id int(4), totalrpice int(6), tax int(6), staff_id int(4), c_id int(4), totalpayable int(6), primary key (o_id), foreign key (staff_id) references staff (staff_id), foreign key (c_id) references customer (c_id));
+Query OK, 0 rows affected, 6 warnings (1.94 sec)
+
+mysql> desc customerorder;
++--------------+------+------+-----+---------+-------+
+| Field        | Type | Null | Key | Default | Extra |
++--------------+------+------+-----+---------+-------+
+| o_id         | int  | NO   | PRI | NULL    |       |
+| totalrpice   | int  | YES  |     | NULL    |       |
+| tax          | int  | YES  |     | NULL    |       |
+| staff_id     | int  | YES  | MUL | NULL    |       |
+| c_id         | int  | YES  | MUL | NULL    |       |
+| totalpayable | int  | YES  |     | NULL    |       |
++--------------+------+------+-----+---------+-------+
+6 rows in set (0.14 sec)
+
+mysql> create table dish (cui_id int(4), cui_name varchar(40), cui_type varchar(40), price int(6), quantity int(3), o_id int(4), primary key (cui_id), foreign key (o_id) references customerorder (o_id));
+Query OK, 0 rows affected, 4 warnings (0.81 sec)
+
+mysql> create table manager (staff_id int(4), manager_code int(4), manager_salary int(6));
+Query OK, 0 rows affected, 3 warnings (0.69 sec)
+
+mysql> create table chef (staff_id int(4), chef_code int(4), chef_salary int(6), primary key (staff_id, chef_code), foreign key (staff_id) references staff);
+ERROR 1239 (42000): Incorrect foreign key definition for 'foreign key without name': Key reference and table reference don't match
+mysql> create table chef (staff_id int(4), chef_code int(4), chef_salary int(6), primary key (staff_id, chef_code), foreign key (staff_id) references (staff));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(staff))' at line 1
+mysql> create table chef (staff_id int(4), chef_code int(4), chef_salary int(6), primary key (staff_id, chef_code), foreign key (staff_id) references (staff));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(staff))' at line 1
+mysql> desc customer
+    -> ;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| c_id       | int         | NO   | PRI | NULL    |       |
+| first_name | varchar(20) | YES  |     | NULL    |       |
+| last_name  | varchar(20) | YES  |     | NULL    |       |
+| date       | varchar(20) | YES  |     | NULL    |       |
+| time_in    | varchar(20) | YES  |     | NULL    |       |
+| time_out   | varchar(20) | YES  |     | NULL    |       |
+| address    | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+7 rows in set (0.03 sec)
+
+mysql> create table chef (staff_id int(4), chef_code int(4), chef_salary int(6), primary key (staff_id, chef_code), foreign key (staff_id) references staff(staff_id));
+Query OK, 0 rows affected, 3 warnings (0.36 sec)
+
+mysql> alter table manager add constraint primary key (staff_id);
+Query OK, 0 rows affected (1.22 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table manager add constraint foreign key (staff_id) references staff(staff_id);
+Query OK, 0 rows affected (1.62 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create table waiter (staff_id int(4), waiter_code int(4), waiter_salary int(6), primary key (staff_id,waiter_code), foreign key (staff_id) references staff(staff_id));
+Query OK, 0 rows affected, 3 warnings (0.73 sec)
+
+mysql> alter table manager add constraint primary key (staff_id, manager_code);
+ERROR 1068 (42000): Multiple primary key defined
+mysql> desc manager;
++----------------+------+------+-----+---------+-------+
+| Field          | Type | Null | Key | Default | Extra |
++----------------+------+------+-----+---------+-------+
+| staff_id       | int  | NO   | PRI | NULL    |       |
+| manager_code   | int  | YES  |     | NULL    |       |
+| manager_salary | int  | YES  |     | NULL    |       |
++----------------+------+------+-----+---------+-------+
+3 rows in set (0.03 sec)
+
+mysql> alter table manager remove constraint primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'constraint primary key' at line 1
+mysql> alter table manager remove constraint primary key(staff_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'constraint primary key(staff_id)' at line 1
+mysql> desc chef;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| staff_id    | int  | NO   | PRI | NULL    |       |
+| chef_code   | int  | NO   | PRI | NULL    |       |
+| chef_salary | int  | YES  |     | NULL    |       |
++-------------+------+------+-----+---------+-------+
+3 rows in set (0.09 sec)
+
+mysql> desc waiter;
++---------------+------+------+-----+---------+-------+
+| Field         | Type | Null | Key | Default | Extra |
++---------------+------+------+-----+---------+-------+
+| staff_id      | int  | NO   | PRI | NULL    |       |
+| waiter_code   | int  | NO   | PRI | NULL    |       |
+| waiter_salary | int  | YES  |     | NULL    |       |
++---------------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> drop table manager;
+Query OK, 0 rows affected (0.71 sec)
+
+mysql> create table manager (staff_id int(4), manager_code int(4), manager_salary int(6), primary key(staff_id,manager_code), foreign key (staf_id) references staff(staff_id));
+ERROR 1072 (42000): Key column 'staf_id' doesn't exist in table
+mysql> create table manager (staff_id int(4), manager_code int(4), manager_salary int(6), primary key(staff_id,manager_code), foreign key (staff_id) references staff(staff_id));
+Query OK, 0 rows affected, 3 warnings (0.30 sec)
+
+mysql> desc dish;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| cui_id   | int         | NO   | PRI | NULL    |       |
+| cui_name | varchar(40) | YES  |     | NULL    |       |
+| cui_type | varchar(40) | YES  |     | NULL    |       |
+| price    | int         | YES  |     | NULL    |       |
+| quantity | int         | YES  |     | NULL    |       |
+| o_id     | int         | YES  | MUL | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> show tables;
++----------------------+
+| Tables_in_restaurant |
++----------------------+
+| chef                 |
+| customer             |
+| customerorder        |
+| dish                 |
+| feedback             |
+| manager              |
+| occupied_by          |
+| phone                |
+| staff                |
+| tables_in_restaurant |
+| waiter               |
++----------------------+
+11 rows in set (0.00 sec)
+
+mysql>
