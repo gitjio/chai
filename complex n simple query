@@ -1,0 +1,65 @@
+mysql> use restaurant;
+Database changed
+mysql> desc customer;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| c_id       | int          | NO   | PRI | NULL    |       |
+| first_name | varchar(20)  | YES  |     | NULL    |       |
+| last_name  | varchar(20)  | YES  |     | NULL    |       |
+| date       | varchar(20)  | YES  |     | NULL    |       |
+| time_in    | varchar(20)  | YES  |     | NULL    |       |
+| time_out   | varchar(20)  | YES  |     | NULL    |       |
+| address    | varchar(150) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> select * from customer;
++------+------------+-----------+-----------+---------+----------+---------------------------------------------------------------------------+
+| c_id | first_name | last_name | date      | time_in | time_out | address                                                                   |
++------+------------+-----------+-----------+---------+----------+---------------------------------------------------------------------------+
+| 1234 | Ayush      | Panchal   | 3/10/2022 | 5:00    | 5:12     | 175, Nanubhai Desai Rd, Sicka Nagar, Khetwadi                             |
+| 2359 | Rahul      | Singh     | 3/10/2022 | 5:22    | 6:33     | Room 202, Ajay CHS, Sector 8A, Airoli                                     |
+| 2703 | Rohit      | Sharma    | 4/10/2022 | 5:15    | 6:01     | Room 901, Signia Oceans, Plot-82, Sector 3, Ghansoli                      |
+| 2759 | Arjun      | Singhania | 3/10/2022 | 5:21    | 6:34     | Room 204, Arun CHS, Sector 9, Airoli                                      |
+| 3619 | Rahul      | Nadar     | 3/10/2022 | 6:51    | 7:38     | 432, Lal Marg Rd, Sector 6, Sanpada                                       |
+| 5678 | Samay      | Mehta     | 4/10/2022 | 5:29    | 6:02     | 9, Amar Indl.estate, A.k.road, Opp.lathia Rubber,sakinaka, Andheri (west) |
+| 9987 | Pranjal    | Parmar    | 3/10/2022 | 6:59    | 7:42     | 201, Shwetabh Marg Rd, Sector 7, Vashi                                    |
++------+------------+-----------+-----------+---------+----------+---------------------------------------------------------------------------+
+7 rows in set (0.00 sec)
+
+mysql> select c_id, sum(c_id), count(date), min(c_id), max(c_id), avg(c_id) from customer group by first_name order by first_name;
++------+-----------+-------------+-----------+-----------+-----------+
+| c_id | sum(c_id) | count(date) | min(c_id) | max(c_id) | avg(c_id) |
++------+-----------+-------------+-----------+-----------+-----------+
+| 2759 |      2759 |           1 |      2759 |      2759 | 2759.0000 |
+| 1234 |      1234 |           1 |      1234 |      1234 | 1234.0000 |
+| 9987 |      9987 |           1 |      9987 |      9987 | 9987.0000 |
+| 2359 |      5978 |           2 |      2359 |      3619 | 2989.0000 |
+| 2703 |      2703 |           1 |      2703 |      2703 | 2703.0000 |
+| 5678 |      5678 |           1 |      5678 |      5678 | 5678.0000 |
++------+-----------+-------------+-----------+-----------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> select c_id, sum(c_id), count(date), min(c_id), max(c_id), avg(c_id) from customer group by date order by date;
++------+-----------+-------------+-----------+-----------+-----------+
+| c_id | sum(c_id) | count(date) | min(c_id) | max(c_id) | avg(c_id) |
++------+-----------+-------------+-----------+-----------+-----------+
+| 1234 |     19958 |           5 |      1234 |      9987 | 3991.6000 |
+| 2703 |      8381 |           2 |      2703 |      5678 | 4190.5000 |
++------+-----------+-------------+-----------+-----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select first_name, last_name from customer where date='3/10/2022';
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| Ayush      | Panchal   |
+| Rahul      | Singh     |
+| Arjun      | Singhania |
+| Rahul      | Nadar     |
+| Pranjal    | Parmar    |
++------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql>
